@@ -1,21 +1,3 @@
----
-title: SRE Incident Response OpenEnv
-emoji: 🚨
-colorFrom: red
-colorTo: orange
-sdk: docker
-pinned: true
-license: apache-2.0
-tags:
-  - openenv
-  - reinforcement-learning
-  - sre
-  - incident-response
-  - agent-evaluation
-  - real-world
-short_description: Train AI agents to triage alerts, diagnose cascading failures, and write post-mortems
----
-
 # 🚨 SRE Incident Response — OpenEnv Environment
 
 > Train AI agents to handle real production incidents: triage alerts, diagnose cascading failures, and write post-mortems.
