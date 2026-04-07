@@ -1,0 +1,7 @@
+# openenv.yaml — SRE Incident Response OpenEnv Environment Manifest
+name: sre-incident-env
+version: "1.0.0"
+description: >
+  A production-grade OpenEnv environment simulating real SRE workflows.
+  Agents learn to triage monitoring alerts, diagnose cascading failures,
+  and write structured post-mortems — skills every on-call engineer needs.
