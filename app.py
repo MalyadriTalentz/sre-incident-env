@@ -22,7 +22,7 @@ import sys
 import uuid
 from typing import Any, Dict, Optional
 
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import Body, FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
@@ -131,7 +131,7 @@ class ResetBody(BaseModel):
 
 
 @app.post("/reset", tags=["openenv"])
-async def reset(body: Optional[ResetBody] = None):
+async def reset(body: Optional[ResetBody] = Body(default=None)):
     """Initialise (or re-initialise) an episode. Returns the initial Observation.
     Accepts empty body, no body, or JSON with task_id/session_id fields.
     """
