@@ -120,10 +120,6 @@ async def list_tasks():
 # ---------------------------------------------------------------------------
 
 
-class ResetRequest(Action.__class__):
-    pass
-
-
 from pydantic import BaseModel
 
 
@@ -131,15 +127,25 @@ class ResetBody(BaseModel):
     task_id: str = "alert_triage"
     session_id: Optional[str] = None
 
+    model_config = {"extra": "allow"}
 
-@app.post("/reset", response_model=Observation, tags=["openenv"])
-async def reset(body: ResetBody):
-    """Initialise (or re-initialise) an episode. Returns the initial Observation."""
-    if body.task_id not in TASK_REGISTRY:
-        raise HTTPException(status_code=400, detail=f"Unknown task_id '{body.task_id}'. Valid: {list(TASK_REGISTRY)}")
+
+@app.post("/reset", tags=["openenv"])
+async def reset(body: Optional[ResetBody] = None):
+    """Initialise (or re-initialise) an episode. Returns the initial Observation.
+    Accepts empty body, no body, or JSON with task_id/session_id fields.
+    """
+    # Handle completely missing or null body
+    if body is None:
+        body = ResetBody()
+
+    task_id = body.task_id if body.task_id else "alert_triage"
+
+    if task_id not in TASK_REGISTRY:
+        raise HTTPException(status_code=400, detail=f"Unknown task_id '{task_id}'. Valid: {list(TASK_REGISTRY)}")
 
     session_id = body.session_id or str(uuid.uuid4())
-    env = SREIncidentEnvironment(task_id=body.task_id)
+    env = SREIncidentEnvironment(task_id=task_id)
     _sessions[session_id] = env
     obs = env.reset()
     # Inject session_id into response info via headers — also embed in a wrapper
