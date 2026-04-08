@@ -2,7 +2,7 @@
 title: SRE Incident Response OpenEnv
 emoji: 🚨
 colorFrom: red
-colorTo: orange
+colorTo: red
 sdk: docker
 pinned: true
 license: apache-2.0
@@ -13,7 +13,7 @@ tags:
   - incident-response
   - agent-evaluation
   - real-world
-short_description: Train AI agents to triage alerts, diagnose cascading failures, and write post-mortems
+short_description: RL environment for SRE incident response
 ---
 
 # 🚨 SRE Incident Response — OpenEnv Environment
