@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: SRE Incident Response OpenEnv
 emoji: 🚨
@@ -16,6 +17,8 @@ tags:
 short_description: RL environment for SRE incident response
 ---
 
+=======
+>>>>>>> c32fb26b1fe7bc2d1338feda088ec05bfd158c6a
 # 🚨 SRE Incident Response — OpenEnv Environment
 
 > Train AI agents to handle real production incidents: triage alerts, diagnose cascading failures, and write post-mortems.
