@@ -7,6 +7,7 @@ license = { text = "Apache-2.0" }
 requires-python = ">=3.11"
 
 dependencies = [
+    "openenv-core>=0.2.0",
     "fastapi==0.115.6",
     "uvicorn[standard]==0.34.0",
     "pydantic>=2.10.4",
@@ -23,10 +24,13 @@ dev = [
     "pytest-asyncio>=0.23.0",
 ]
 
+[project.scripts]
+server = "server.app:main"
+
 [build-system]
 requires = ["setuptools>=70", "wheel"]
 build-backend = "setuptools.backends.legacy:build"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["sre_incident_env*", "tasks*"]
+include = ["sre_incident_env*", "tasks*", "server*"]
