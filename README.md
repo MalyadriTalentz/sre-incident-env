@@ -333,15 +333,6 @@ sre-incident-env/
 
 ---
 
-## 🤗 Deploying to Hugging Face Spaces
-
-1. Create a new Space with **Docker SDK**
-2. Push this repository to the Space
-3. (Optional) Set `OPENAI_API_KEY` in Space secrets for live LLM baseline
-4. The Space will expose the environment at `https://<your-space>.hf.space`
-
----
-
 ## 📜 License
 
 Apache 2.0 — see [LICENSE](LICENSE).
