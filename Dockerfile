@@ -15,7 +15,7 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /home/user/app
 
-# Install Python dependencies
+# Install Python dependencies — upgrade pip first to avoid resolver issues
 COPY --chown=user requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
@@ -26,7 +26,7 @@ COPY --chown=user . .
 # Expose port (HF Spaces uses 7860)
 EXPOSE 7860
 
-# Health check — curl is not in slim; use Python urllib instead
+# Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:7860/health').read()"
 
