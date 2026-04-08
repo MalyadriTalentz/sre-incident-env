@@ -61,6 +61,11 @@ def _keyword_score(text: str, required_keywords: List[str], bonus_keywords: List
     return min(1.0, required_score * 0.8 + bonus_score)
 
 
+def _clamp(score: float) -> float:
+    """Ensure score is strictly between 0 and 1 (never exactly 0.0 or 1.0)."""
+    return max(0.01, min(0.99, score))
+
+
 # ===========================================================================
 # TASK 1 — EASY: Alert Triage
 # ===========================================================================
@@ -216,6 +221,7 @@ def grade_alert_triage(history: List[Tuple[Action, StepResult]]) -> Tuple[float,
         details["per_alert"][aid] = {"score": round(alert_score, 3), "reasons": reasons}
         total_score += alert_score / len(ALERT_TRIAGE_GROUND_TRUTH)
 
+    total_score = _clamp(total_score)
     details["final_score"] = round(total_score, 4)
     return total_score, details
 
@@ -465,7 +471,7 @@ def grade_cascading_failure(history: List[Tuple[Action, StepResult]]) -> Tuple[f
         details["components"]["efficiency_bonus"] = 0.0
 
     score = sum(details["components"].values())
-    score = round(min(1.0, score), 4)
+    score = _clamp(round(score, 4))
     details["final_score"] = score
     return score, details
 
@@ -557,9 +563,9 @@ def grade_postmortem(history: List[Tuple[Action, StepResult]]) -> Tuple[float, D
             best_pm = action.payload  # take the last one written
 
     if best_pm is None:
-        details["final_score"] = 0.0
+        details["final_score"] = 0.01
         details["reason"] = "No write_postmortem action found"
-        return 0.0, details
+        return 0.01, details
 
     score = 0.0
 
@@ -627,7 +633,7 @@ def grade_postmortem(history: List[Tuple[Action, StepResult]]) -> Tuple[float, D
     details["components"]["contributing_factors_bonus"] = round(cf_bonus, 4)
 
     score = sum(details["components"].values())
-    score = round(min(1.0, score), 4)
+    score = _clamp(round(score, 4))
     details["final_score"] = score
     return score, details
 
